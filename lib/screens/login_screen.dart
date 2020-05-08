@@ -1,6 +1,7 @@
 import 'package:flashchat/screens/chat_screen.dart';
+import 'package:flashchat/screens/home.dart';
 import 'package:flutter/material.dart';
-import 'package:flashchat/constants.dart';
+import 'file:///C:/Users/Harshul%20C/AndroidStudioProjects/cloud_project/lib/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'chat_screen.dart';
@@ -53,16 +54,18 @@ String password;
               SizedBox(
                 height: 8.0,
               ),
-              TextField(
-                  textAlign: TextAlign.center,
-                  obscureText: true,
-                onChanged: (value) {
-                  //Do something with the user input.
-                  password=value;
-                },
-                decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Enter password',
-                )
+              Flexible(
+                child: TextField(
+                    textAlign: TextAlign.center,
+                    obscureText: true,
+                  onChanged: (value) {
+                    //Do something with the user input.
+                    password=value;
+                  },
+                  decoration: kTextFieldDecoration.copyWith(
+                      hintText: 'Enter password',
+                  )
+                ),
               ),
               SizedBox(
                 height: 24.0,
@@ -81,7 +84,8 @@ String password;
                       //Implement login functionality.
                      try{ final user= await _auth.signInWithEmailAndPassword(email: email, password: password);
                       if(user!=null)
-                        Navigator.pushNamed(context, ChatScreen.id);}
+                        Navigator.pushNamed(context, Home.id);
+                     }
                         catch(e){
                           print(e);
                         }

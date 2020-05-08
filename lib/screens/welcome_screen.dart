@@ -3,6 +3,10 @@ import 'package:flashchat/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flashchat/components/Rounded_Button.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import 'package:flashchat/screens/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 class WelcomeScreen extends StatefulWidget {
   static String id='/Welcome';
   @override
@@ -18,12 +22,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
     super.initState();
     controller=AnimationController(
       duration: Duration(
-        seconds:1
+        seconds:3
       ),
 
       vsync: this,
     );
-    animation=ColorTween(begin:Colors.blueGrey, end:Colors.blue[900]).animate(controller);
+    animation=ColorTween(begin:Colors.grey, end:Colors.blue[900]).animate(controller);
     controller.forward();
 
     controller.addListener(() {
@@ -43,6 +47,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
   }
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<FirebaseUser>(context);
+    print(user);
+    if(user!=null)
+      return Home();
+    else
     return Scaffold(
       backgroundColor: animation.value,
       body: Padding(
@@ -63,7 +72,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
                 TypewriterAnimatedTextKit(
                   text:['Flash Chat'],
                   textStyle: TextStyle(
-                    fontSize: 45.0,
+                    fontSize: 63.0,
+                    fontFamily: 'Caveat',
                     fontWeight: FontWeight.w900,
                     color: Colors.white,
                   ),

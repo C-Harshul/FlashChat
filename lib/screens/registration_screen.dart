@@ -1,10 +1,13 @@
 import 'package:flashchat/screens/chat_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flashchat/constants.dart';
+import 'file:///C:/Users/Harshul%20C/AndroidStudioProjects/cloud_project/lib/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'chat_screen.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flashchat/screens/home.dart';
+final _firestore = Firestore.instance;
 class RegistrationScreen extends StatefulWidget {
   static String id='/Register';
   @override
@@ -85,7 +88,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                      final newUser = await _auth.createUserWithEmailAndPassword(
                          email: email, password: password);
                          if(newUser!=null){
-                            Navigator.pushNamed(context, ChatScreen.id);
+                           _firestore.collection('users').add({
+                             'name':email
+                           });
+                           Navigator.pushNamed(context, Home.id);
                          }
                        }catch(e){
                                print(e);
