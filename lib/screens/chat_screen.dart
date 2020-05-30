@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'file:///C:/Users/Harshul%20C/AndroidStudioProjects/cloud_project/lib/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:intl/intl.dart';
 Map chatUserList ={};
 final _firestore = Firestore.instance;
@@ -139,33 +139,35 @@ class MessagesStream extends StatelessWidget {
             ),
           );
         }
-        final messages = snapshot.data.documents;
-        List<MessageBubble> messageBubbles = [] ;
+        else{
+          final messages = snapshot.data.documents;
+          List<MessageBubble> messageBubbles = [] ;
 
 
-        for (var message in messages) {
-          final messageText = message.data['text'];
-          final messageSender = message.data['sender'];
-          final messageTime=message.data['time'] ;
-          final currentUser = loggedInUser.email;
+          for (var message in messages) {
+            final messageText = message.data['text'];
+            final messageSender = message.data['sender'];
+            final messageTime=message.data['time'] ;
+            final currentUser = loggedInUser.email;
 
-          final messageBubble = MessageBubble(
-            sender: messageSender,
-            text: messageText,
-            time:messageTime,
-            isMe: currentUser == messageSender,
+            final messageBubble = MessageBubble(
+              sender: messageSender,
+              text: messageText,
+              time:messageTime,
+              isMe: currentUser == messageSender,
+            );
+            messageBubbles.add(messageBubble);
+            //print(message['time']);
+          }
+          messageBubbles.sort((b, a) => a.time.compareTo(b.time));
+          return Expanded(
+            child: ListView(
+              reverse: true,
+              padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+              children: messageBubbles,
+            ),
           );
-          messageBubbles.add(messageBubble);
-          //print(message['time']);
         }
-        messageBubbles.sort((b, a) => a.time.compareTo(b.time));
-        return Expanded(
-          child: ListView(
-            reverse: true,
-            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-            children: messageBubbles,
-          ),
-        );
       },
     );
   }

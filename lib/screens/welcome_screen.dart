@@ -3,7 +3,6 @@ import 'package:flashchat/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flashchat/components/Rounded_Button.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:flashchat/screens/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -30,13 +29,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with SingleTickerProvider
     animation=ColorTween(begin:Colors.grey, end:Colors.blue[900]).animate(controller);
     controller.forward();
 
-    controller.addListener(() {
-      print(animation.value);
-      setState(() {
 
-      });
-     }
-    );
   }
   @override
   void dispose() {
